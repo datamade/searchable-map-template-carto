@@ -1,5 +1,3 @@
-// 'use strict';
-
 // Define the function that creates the library object.
 function CartoLib() {
   // A variable of default settings, accessible to public. Functions below can update these settings.
@@ -46,24 +44,9 @@ function CartoLib() {
 // Define the behaviors that the library object has.
 CartoLib.prototype.initiateMap = function() {
     // Initiate leaflet map
-
-
-    var google_map_styles = [
-        {
-          stylers: [
-            { saturation: -100 },
-            { lightness: 40 }
-          ]
-        }
-      ];
-
     var div = this.mapSettings.mapDivName;
     var geocoder = new google.maps.Geocoder();
-    var layer = new L.Google('ROADMAP',
-      {
-        animate: false,
-        mapOptions: {styles: google_map_styles}
-      });
+    var layer = new L.Google('ROADMAP');
 
     this.mapSettings.map = new L.Map('mapCanvas', {
       center: this.mapSettings.mapCentroid,
@@ -105,7 +88,7 @@ CartoLib.prototype.clearInfoBox = function(divName) {
 CartoLib.prototype.createCartoLayer = function() {
   sublayerArr = []
 
-  // Input the results from defineSublayer as arguments. when calling this function.
+  // Input the results from defineSublayer as arguments.
   for (i = 0; i < arguments.length; i++) {
     sublayerArr.push(arguments[i]);
   }
@@ -123,21 +106,21 @@ CartoLib.prototype.createCartoLayer = function() {
     .addTo(this.mapSettings.map)
     .done(function(layer) {
       // Add actions for each sublayer: featureOver, featureOut, featureClick.
-      // Below is an example.
-      layerZero = layer.getSubLayer(0);
-      layerZero.setInteraction(true);
+      // EXAMPLE:
+      // layerZero = layer.getSubLayer(0);
+      // layerZero.setInteraction(true);
 
-      layerZero.on('featureOver', function(data) {
-        $(mapName).css('cursor','pointer');
-        CartoLib.prototype.updateInfoBox(data, "infoBox");
-      });
-      layerZero.on('featureOut', function() {
-        $(mapName).css('cursor','inherit');
-        CartoLib.prototype.clearInfoBox("infoBox");
-      });
-      layerZero.on('featureClick', function(data){
-        // Add something here, e.g., a modal window.
-      });
+      // layerZero.on('featureOver', function(data) {
+      //   $(mapName).css('cursor','pointer');
+      //   CartoLib.prototype.updateInfoBox(data, "infoBox");
+      // });
+      // layerZero.on('featureOut', function() {
+      //   $(mapName).css('cursor','inherit');
+      //   CartoLib.prototype.clearInfoBox("infoBox");
+      // });
+      // layerZero.on('featureClick', function(data){
+      //   // Add something here, e.g., a modal window.
+      // });
     }).error(function(e) {
       console.log(e)
     });
