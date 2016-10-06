@@ -1,7 +1,7 @@
 // 'use strict';
 
 // Define the function that creates the library object.
-function CartoDbLib() {
+function CartoLib() {
   // A variable of default settings, accessible to public. Functions below can update these settings.
   this.mapSettings = {
     cartodbTableName: '',
@@ -44,7 +44,7 @@ function CartoDbLib() {
 }
 
 // Define the behaviors that the library object has.
-CartoDbLib.prototype.initiateMap = function() {
+CartoLib.prototype.initiateMap = function() {
     // Initiate leaflet map
     var div = this.mapSettings.mapDivName;
     var geocoder = new google.maps.Geocoder();
@@ -60,7 +60,7 @@ CartoDbLib.prototype.initiateMap = function() {
     this.mapSettings.map.addLayer(layer);
 }
 
-CartoDbLib.prototype.addInfoBox = function(mapPosition, divName, text) {
+CartoLib.prototype.addInfoBox = function(mapPosition, divName, text) {
     var text = text || ''
     var info = L.control({position: mapPosition});
 
@@ -73,7 +73,7 @@ CartoDbLib.prototype.addInfoBox = function(mapPosition, divName, text) {
     info.addTo(this.mapSettings.map);
 }
 
-CartoDbLib.prototype.updateInfoBox = function(data, divName) {
+CartoLib.prototype.updateInfoBox = function(data, divName) {
   if (data) {
     var infoText = 'new text!!!'
     // Create custom HTML based on data given.
@@ -83,11 +83,11 @@ CartoDbLib.prototype.updateInfoBox = function(data, divName) {
   }
 }
 
-CartoDbLib.prototype.clearInfoBox = function(divName) {
+CartoLib.prototype.clearInfoBox = function(divName) {
   $('html').find("div." + divName).html('');
 }
 
-CartoDbLib.prototype.createCartoLayer = function() {
+CartoLib.prototype.createCartoLayer = function() {
   sublayerArr = []
 
   // Input the results from defineSublayer as arguments. when calling this function.
@@ -114,11 +114,11 @@ CartoDbLib.prototype.createCartoLayer = function() {
 
       layerZero.on('featureOver', function(data) {
         $(mapName).css('cursor','pointer');
-        CartoDbLib.prototype.updateInfoBox(data, "infoBox");
+        CartoLib.prototype.updateInfoBox(data, "infoBox");
       });
       layerZero.on('featureOut', function() {
         $(mapName).css('cursor','inherit');
-        CartoDbLib.prototype.clearInfoBox("infoBox");
+        CartoLib.prototype.clearInfoBox("infoBox");
       });
       layerZero.on('featureClick', function(data){
         // Add something here, e.g., a modal window.
@@ -128,7 +128,7 @@ CartoDbLib.prototype.createCartoLayer = function() {
     });
 }
 
-CartoDbLib.prototype.defineSublayer = function(sqlQuery, cartoCSSId) {
+CartoLib.prototype.defineSublayer = function(sqlQuery, cartoCSSId) {
 
   var layer = {
     sql: sqlQuery,
@@ -140,7 +140,7 @@ CartoDbLib.prototype.defineSublayer = function(sqlQuery, cartoCSSId) {
 }
 
 // Driver code
-var map = new CartoDbLib
+var map = new CartoLib
 map.setTableName('large_lots_citywide_expansion_data');
 map.setUserName('datamade');
 map.setFields('pin');

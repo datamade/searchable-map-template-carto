@@ -1,2 +1,2 @@
 # CartoLib
-A library for building interactive Carto maps.
+A JavaScript library for building interactive Carto maps.
