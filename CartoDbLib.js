@@ -1,9 +1,7 @@
 // 'use strict';
 
 // Define the function that creates the library object.
-
 function CartoDbLib() {
-
   // A variable of default settings, accessible to public. Functions below can update these settings.
   this.mapSettings = {
     cartodbTableName: '',
@@ -46,28 +44,11 @@ function CartoDbLib() {
 }
 
 // Define the behaviors that the library object has.
-CartoDbLib.prototype.init = function() {
-
-}
-
 CartoDbLib.prototype.initiateMap = function() {
-    // Unneeded style nonsense.
-    var google_map_styles = [
-        {
-          stylers: [
-            { saturation: -100 },
-            { lightness: 40 }
-          ]
-        }
-      ];
-
-
     // Initiate leaflet map
     var div = this.mapSettings.mapDivName;
     var geocoder = new google.maps.Geocoder();
-    // var layer = new L.Google('ROADMAP');
-    var layer = new L.Google('ROADMAP', {mapOptions: {styles: google_map_styles}
-    });
+    var layer = new L.Google('ROADMAP', {animate: false});
 
     this.mapSettings.map = new L.Map('mapCanvas', {
       center: this.mapSettings.mapCentroid,
@@ -79,85 +60,72 @@ CartoDbLib.prototype.initiateMap = function() {
     this.mapSettings.map.addLayer(layer);
 }
 
-CartoDbLib.prototype.addInfoBox = function(mapPosition, divName) {
+CartoDbLib.prototype.addInfoBox = function(mapPosition, divName, text) {
+    var text = text || ''
     var info = L.control({position: mapPosition});
 
     info.onAdd = function (map) {
       this._div = L.DomUtil.create('div', divName);
+      this._div.innerHTML = text;
       return this._div;
     };
 
     info.addTo(this.mapSettings.map);
 }
 
-CartoDbLib.prototype.updateInfoBox = function(divName, text) {
-  divThis = $('html').find("div." + divName);
-  $(divThis).html(text);
+CartoDbLib.prototype.updateInfoBox = function(data, divName) {
+  if (data) {
+    var infoText = 'new text!!!'
+    // Create custom HTML based on data given.
+
+    // Update the particular div.
+    $('html').find("div." + divName).html(infoText);
+  }
+}
+
+CartoDbLib.prototype.clearInfoBox = function(divName) {
+  $('html').find("div." + divName).html('');
 }
 
 CartoDbLib.prototype.createCartoLayer = function() {
   sublayerArr = []
 
+  // Input the results from defineSublayer as arguments. when calling this function.
   for (i = 0; i < arguments.length; i++) {
     sublayerArr.push(arguments[i]);
   }
 
-  // Yes, it queries large_lots!
-  var sql = new cartodb.SQL({ user: 'datamade' });
-  sql.execute("select * from large_lots_citywide_expansion_data")
-  .done(function(listData) {
-        var obj_array = listData.rows;
-        console.log(listData.rows.length)
-  });
-
-
   var layerOpts = {
-    // user_name: this.mapSettings.cartodbUserName,
-    user_name: 'datamade',
+    user_name: this.mapSettings.cartodbUserName,
     type: 'cartodb',
     cartodb_logo: false,
-    sublayers: [
-      {
-        sql: "select * from large_lots_citywide_expansion_data",
-        cartocss: $('#applied-styles').html().trim(),
-        interactivity: this.mapSettings.fields
-      }
-    ]
+    sublayers: sublayerArr
   }
 
-  // cartodb.createLayer(this.mapSettings.map, layerOpts, { https: true }).on('done', function(){
-  //   console.log('we dit it')
-  // })
-
-  // this.mapSettings.map.addLayer(lay);
-  //   .done(function(layer){
-  //     console.log("done!")
-  //     sublayer = layer.getSubLayer(0)
-  //     sublayer.setInteraction(true);
-
-  //     sublayer.on('featureOver', function(e, latlng, pos, data, subLayerIndex){
-  //       console.log("over")
-  //     });
-
-  //   })
-
-
-  // Possible alternative: Try to break it up.
-  // var lay = cartodb.createLayer(this.mapSettings.map, layerOpts);
-
-  // var thingMap = this.mapSettings.map
-
-  // $.when(lay).done(function(lay){
-  //   lay.addTo(thingMap);
-  //   console.log("done!!")
-  // });
-
+  var mapName = "#" + this.mapSettings.mapDivName + " div"
 
   cartodb.createLayer(this.mapSettings.map, layerOpts, { https: true })
     .addTo(this.mapSettings.map)
-    .done(function() {
+    .done(function(layer) {
+      // Add actions for each sublayer: featureOver, featureOut, featureClick.
+      // Below is an example.
+      layerZero = layer.getSubLayer(0);
+      layerZero.setInteraction(true);
 
-    })
+      layerZero.on('featureOver', function(data) {
+        $(mapName).css('cursor','pointer');
+        CartoDbLib.prototype.updateInfoBox(data, "infoBox");
+      });
+      layerZero.on('featureOut', function() {
+        $(mapName).css('cursor','inherit');
+        CartoDbLib.prototype.clearInfoBox("infoBox");
+      });
+      layerZero.on('featureClick', function(data){
+        // Add something here, e.g., a modal window.
+      });
+    }).error(function(e) {
+      console.log(e)
+    });
 }
 
 CartoDbLib.prototype.defineSublayer = function(sqlQuery, cartoCSSId) {
@@ -180,8 +148,7 @@ map.setMapDivName('mapCanvas');
 map.setDefaultZoom(12);
 map.setCentroid(41.7872, -87.6345)
 map.initiateMap()
-map.addInfoBox('bottomleft', 'infoBox')
-map.updateInfoBox('infoBox', '<p>This is some text</p>')
+map.addInfoBox('bottomright', 'infoBox')
 var layer1 = map.defineSublayer("select * from large_lots_citywide_expansion_data", '#applied-styles');
 map.createCartoLayer(layer1)
 
