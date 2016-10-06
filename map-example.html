@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"/>
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
     <link rel="stylesheet" type="text/css" href="css/style-example.css">
@@ -37,12 +38,23 @@
       }
     </style>
 
-    <div>
-      <h1>CartoLib</h1>
-      <p>A JavaScript library for building interactive Carto maps.</p>
+    <div class="container">
+
+      <div class="row">
+        <div class="col-md-12">
+          <h2>CartoLib</h2>
+          <p>A JavaScript library for building interactive Carto maps.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <div style="width:600px; height:600px;" id="mapCanvas"></div>
+        </div>
+      </div>
+
     </div>
 
-    <div style="width:500px; height:500px" id="mapCanvas"></div>
   </body>
 </html>
 

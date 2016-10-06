@@ -91,7 +91,7 @@ CartoLib.prototype.createCartoLayer = function() {
   }
 
   var createdLayer = cartodb.createLayer(this._mapSettings.map, layerOpts, { https: true });
-  return createLayer;
+  return createdLayer;
 }
 
 CartoLib.prototype.defineSublayer = function(sqlQuery, cartoCSSId) {

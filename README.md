@@ -56,6 +56,7 @@ You can add feature events, for example, a hover feature that adds data to the i
 To render a custom map you need to add additional code, depending on the data that comes from Carto. These function require additional
 
 **updateInfoBox**
+
 This function adds content to the info window on the map. Add your custom HTML by parsing the data object, for example:
 
 ```
@@ -63,6 +64,7 @@ infoText += "<p>Subheader: " + data.prop_name + "</p>";
 ```
 
 **createCartoLayer**
+
 This function adds sublayers with location markers, taken from your Carto query. After adding a sublayer to your map, you can also create feature events, such as hover and click events. It is here that you can call your unique updateInfoBox functions.
 
 ## Add custom styles
@@ -105,7 +107,7 @@ In the body of he HTML file, add a style tag with a unique id. Inside this, put 
 </style>
 ```
 
-## Errors / Bugs
+## Errors and Bugs
 
 If something is not behaving intuitively, it is a bug, and should be reported.
 Report it here: https://github.com/datamade/CartoLib/issues
