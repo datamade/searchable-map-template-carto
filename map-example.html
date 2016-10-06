@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang='en'>
   <head>
-    <title>
-     Map
-    </title>
+    <title>CartoLib</title>
 
     <meta charset='utf-8'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,8 +13,8 @@
 
   </head>
   <body>
-    <style id="applied-styles">
-      #full_area_lots {
+    <style id="carto-result-style">
+      #carto-result {
         marker-fill-opacity: 0.9;
         marker-line-color: #FFF;
         marker-line-width: 1;
@@ -36,7 +34,6 @@
 
     <div style="width:500px; height:500px" id="mapCanvas"></div>
 
-
     <!-- Load JS after DOM -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -45,6 +42,8 @@
     <script src="http://libs.cartocdn.com/cartodb.js/v3/3.15/cartodb.js"></script>
 
     <script src="http://matchingnotes.com/javascripts/leaflet-google.js"></script>
+
+    <script type="text/javascript" src="leaflet-google.js"></script>
 
     <script type="text/javascript" src="CartoLib.js"></script>
   </body>

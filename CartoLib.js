@@ -46,9 +46,24 @@ function CartoLib() {
 // Define the behaviors that the library object has.
 CartoLib.prototype.initiateMap = function() {
     // Initiate leaflet map
+
+
+    var google_map_styles = [
+        {
+          stylers: [
+            { saturation: -100 },
+            { lightness: 40 }
+          ]
+        }
+      ];
+
     var div = this.mapSettings.mapDivName;
     var geocoder = new google.maps.Geocoder();
-    var layer = new L.Google('ROADMAP', {animate: false});
+    var layer = new L.Google('ROADMAP',
+      {
+        animate: false,
+        mapOptions: {styles: google_map_styles}
+      });
 
     this.mapSettings.map = new L.Map('mapCanvas', {
       center: this.mapSettings.mapCentroid,
@@ -75,7 +90,7 @@ CartoLib.prototype.addInfoBox = function(mapPosition, divName, text) {
 
 CartoLib.prototype.updateInfoBox = function(data, divName) {
   if (data) {
-    var infoText = 'new text!!!'
+    var infoText = 'Example text. Data goes here.'
     // Create custom HTML based on data given.
 
     // Update the particular div.
@@ -149,7 +164,7 @@ map.setDefaultZoom(12);
 map.setCentroid(41.7872, -87.6345)
 map.initiateMap()
 map.addInfoBox('bottomright', 'infoBox')
-var layer1 = map.defineSublayer("select * from large_lots_citywide_expansion_data", '#applied-styles');
+var layer1 = map.defineSublayer("select * from large_lots_citywide_expansion_data", '#carto-result-style');
 map.createCartoLayer(layer1)
 
 
