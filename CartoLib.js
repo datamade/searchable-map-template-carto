@@ -1,14 +1,12 @@
-// Define the function that creates the library object.
 function CartoLib() {
-  // A variable of default settings, accessible to public. Functions below can update these settings.
-  this.mapSettings = {
+  this._mapSettings = {
     cartodbTableName: '',
     cartodbUserName: '',
     locationScope: 'chicago',
     mapDivName: '',
     map: null,
     mapCentroid: new L.LatLng(41.7872, -87.6345),
-    defaultZoom: 14,
+    defaultZoom: 11,
     lastClickedLayer: null,
     geojson: null,
     fields: ''
@@ -16,46 +14,45 @@ function CartoLib() {
 
   // Functions to update settings.
   this.setTableName = function(name) {
-    this.mapSettings.cartodbTableName = name;
+    this._mapSettings.cartodbTableName = name;
   };
 
   this.setUserName = function(name) {
-    this.mapSettings.cartodbUserName = name;
+    this._mapSettings.cartodbUserName = name;
   };
 
   this.setFields = function(fields) {
-    this.mapSettings.fields = fields;
+    this._mapSettings.fields = fields;
   };
 
   this.setMapDivName = function(name) {
-    this.mapSettings.mapDivName = name;
+    this._mapSettings.mapDivName = name;
   };
 
   this.setCentroid = function(latitude, longitude) {
-    this.mapSettings.mapCentroid = new L.LatLng(latitude, longitude);
+    this._mapSettings.mapCentroid = new L.LatLng(latitude, longitude);
   };
 
   this.setDefaultZoom = function(zoom) {
-    this.mapSettings.defaultZoom = zoom;
+    this._mapSettings.defaultZoom = zoom;
   };
 
 }
 
-// Define the behaviors that the library object has.
 CartoLib.prototype.initiateMap = function() {
     // Initiate leaflet map
-    var div = this.mapSettings.mapDivName;
+    var div = this._mapSettings.mapDivName;
     var geocoder = new google.maps.Geocoder();
     var layer = new L.Google('ROADMAP');
 
-    this.mapSettings.map = new L.Map('mapCanvas', {
-      center: this.mapSettings.mapCentroid,
-      zoom: this.mapSettings.defaultZoom,
+    this._mapSettings.map = new L.Map('mapCanvas', {
+      center: this._mapSettings.mapCentroid,
+      zoom: this._mapSettings.defaultZoom,
       scrollWheelZoom: false,
       tapTolerance: 30
     });
 
-    this.mapSettings.map.addLayer(layer);
+    this._mapSettings.map.addLayer(layer);
 }
 
 CartoLib.prototype.addInfoBox = function(mapPosition, divName, text) {
@@ -68,17 +65,11 @@ CartoLib.prototype.addInfoBox = function(mapPosition, divName, text) {
       return this._div;
     };
 
-    info.addTo(this.mapSettings.map);
+    info.addTo(this._mapSettings.map);
 }
 
-CartoLib.prototype.updateInfoBox = function(data, divName) {
-  if (data) {
-    var infoText = 'Example text. Data goes here.'
-    // Create custom HTML based on data given.
-
-    // Update the particular div.
-    $('html').find("div." + divName).html(infoText);
-  }
+CartoLib.prototype.updateInfoBox = function(infoText, divName) {
+  $('html').find("div." + divName).html(infoText);
 }
 
 CartoLib.prototype.clearInfoBox = function(divName) {
@@ -86,44 +77,21 @@ CartoLib.prototype.clearInfoBox = function(divName) {
 }
 
 CartoLib.prototype.createCartoLayer = function() {
-  sublayerArr = []
-
   // Input the results from defineSublayer as arguments.
+  sublayerArr = []
   for (i = 0; i < arguments.length; i++) {
     sublayerArr.push(arguments[i]);
   }
 
   var layerOpts = {
-    user_name: this.mapSettings.cartodbUserName,
+    user_name: this._mapSettings.cartodbUserName,
     type: 'cartodb',
     cartodb_logo: false,
     sublayers: sublayerArr
   }
 
-  var mapName = "#" + this.mapSettings.mapDivName + " div"
-
-  cartodb.createLayer(this.mapSettings.map, layerOpts, { https: true })
-    .addTo(this.mapSettings.map)
-    .done(function(layer) {
-      // Add actions for each sublayer: featureOver, featureOut, featureClick.
-      // EXAMPLE:
-      // layerZero = layer.getSubLayer(0);
-      // layerZero.setInteraction(true);
-
-      // layerZero.on('featureOver', function(data) {
-      //   $(mapName).css('cursor','pointer');
-      //   CartoLib.prototype.updateInfoBox(data, "infoBox");
-      // });
-      // layerZero.on('featureOut', function() {
-      //   $(mapName).css('cursor','inherit');
-      //   CartoLib.prototype.clearInfoBox("infoBox");
-      // });
-      // layerZero.on('featureClick', function(data){
-      //   // Add something here, e.g., a modal window.
-      // });
-    }).error(function(e) {
-      console.log(e)
-    });
+  var createdLayer = cartodb.createLayer(this._mapSettings.map, layerOpts, { https: true });
+  return createLayer;
 }
 
 CartoLib.prototype.defineSublayer = function(sqlQuery, cartoCSSId) {
@@ -131,23 +99,9 @@ CartoLib.prototype.defineSublayer = function(sqlQuery, cartoCSSId) {
   var layer = {
     sql: sqlQuery,
     cartocss: $(cartoCSSId).html().trim(),
-    interactivity: this.mapSettings.fields
+    interactivity: this._mapSettings.fields
   }
 
   return layer
 }
-
-// Driver code
-var map = new CartoLib
-map.setTableName('large_lots_citywide_expansion_data');
-map.setUserName('datamade');
-map.setFields('pin');
-map.setMapDivName('mapCanvas');
-map.setDefaultZoom(12);
-map.setCentroid(41.7872, -87.6345)
-map.initiateMap()
-map.addInfoBox('bottomright', 'infoBox')
-var layer1 = map.defineSublayer("select * from large_lots_citywide_expansion_data", '#carto-result-style');
-map.createCartoLayer(layer1)
-
 
