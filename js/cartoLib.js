@@ -126,6 +126,7 @@ CartoLib.prototype.doSearch = function() {
   this.clearSearch();
 
   var cartoLib = this;
+  // #search-address refers to a div id in map-example.html. You can rename this div.
   var address = $("#search-address").val();
   var radius = $("#search-radius").val();
   var location = this._mapSettings.locationScope;
