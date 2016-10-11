@@ -9,8 +9,13 @@ function CartoLib() {
     defaultZoom: 11,
     lastClickedLayer: null,
     geojson: null,
-    fields: ''
+    fields: '',
+    currentPinpoint: '',
   };
+
+  this._geocoder = new google.maps.Geocoder();
+  this._centerMark = '';
+  this._radiusCircle = '';
 
   // Functions to update settings.
   this.setTableName = function(name) {
@@ -42,7 +47,7 @@ function CartoLib() {
 CartoLib.prototype.initiateMap = function() {
     // Initiate leaflet map
     var div = this._mapSettings.mapDivName;
-    var geocoder = new google.maps.Geocoder();
+    // var geocoder = new google.maps.Geocoder();
     var layer = new L.Google('ROADMAP');
 
     this._mapSettings.map = new L.Map('mapCanvas', {
@@ -105,3 +110,75 @@ CartoLib.prototype.defineSublayer = function(sqlQuery, cartoCSSId) {
   return layer
 }
 
+CartoLib.prototype.setZoom = function(radius) {
+  var zoom = '';
+  if (radius >= 8050) zoom = 12; // 5 miles
+  else if (radius >= 3220) zoom = 13; // 2 miles
+  else if (radius >= 1610) zoom = 14; // 1 mile
+  else if (radius >= 805) zoom = 15; // 1/2 mile
+  else if (radius >= 400) zoom = 16; // 1/4 mile
+  else zoom = 16;
+
+  this._mapSettings.map.setView(new L.LatLng( this._mapSettings.currentPinpoint[0], this._mapSettings.currentPinpoint[1] ), zoom)
+}
+
+CartoLib.prototype.doSearch = function() {
+  this.clearSearch();
+
+  var cartoLib = this;
+  var address = $("#search-address").val();
+  var radius = $("#search-radius").val();
+  var location = this._mapSettings.locationScope;
+
+  if (radius == null && address != "") {
+    radius = 8050;
+  }
+
+  if (address != "") {
+    this._geocoder.geocode( { 'address': address }, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+       cartoLib._mapSettings.currentPinpoint = [results[0].geometry.location.lat(), results[0].geometry.location.lng()];
+        var geoSearch = "ST_DWithin(ST_SetSRID(ST_POINT(" + cartoLib._mapSettings.currentPinpoint[1] + ", " + cartoLib._mapSettings.currentPinpoint[0] + "), 4326)::geography, the_geom::geography, " + radius + ")";
+        var whereClause = " WHERE the_geom is not null AND " + geoSearch;
+
+        cartoLib.setZoom(radius);
+        cartoLib.addIcon();
+        cartoLib.addCircle(radius);
+      }
+      else {
+        alert("We could not find your address: " + status);
+      }
+    });
+  }
+}
+
+CartoLib.prototype.addIcon = function() {
+  this._centerMark = new L.Marker(this._mapSettings.currentPinpoint, {
+    icon: (new L.Icon({
+      iconUrl: 'push_pin.png',
+      iconSize: [30, 30],
+      iconAnchor: [10, 32]
+      })
+    )
+  });
+
+  this._centerMark.addTo(this._mapSettings.map);
+}
+
+CartoLib.prototype.addCircle = function(radius) {
+  this._radiusCircle = new L.circle(this._mapSettings.currentPinpoint, radius, {
+      fillColor:'#1d5492',
+      fillOpacity:'0.2',
+      stroke: false,
+      clickable: false
+  });
+
+  this._radiusCircle.addTo(this._mapSettings.map);
+}
+
+CartoLib.prototype.clearSearch = function() {
+  if (this._centerMark)
+    this._mapSettings.map.removeLayer( this._centerMark );
+  if (this._radiusCircle)
+    this._mapSettings.map.removeLayer( this._radiusCircle );
+}

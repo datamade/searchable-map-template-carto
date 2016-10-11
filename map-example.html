@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="http://libs.cartocdn.com/cartodb.js/v3/3.15/themes/css/cartodb.css" />
     <link rel="stylesheet" type="text/css" href="css/style-example.css">
 
+    <!-- CDN for getting Font Awesome icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+
     <!-- JavaScript -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 
@@ -38,18 +41,44 @@
       }
     </style>
 
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Chicago Public Libraries</a>
+        </div>
+      </div>
+    </nav>
+
     <div class="container">
 
       <div class="row">
-        <div class="col-md-12">
-          <h2>CartoLib</h2>
-          <p>A JavaScript library for building interactive Carto maps.</p>
-        </div>
-      </div>
+        <div class="col-md-4">
+          <p>Find public libraries near you in Chicago.</p>
+          <p>An interactive map built using CartoLib with data from the City of Chicago <a href="https://data.cityofchicago.org/" target="_blank">data portal</a>.</p>
 
-      <div class="row">
-        <div class="col-md-12">
-          <div style="width:600px; height:600px;" id="mapCanvas"></div>
+          <div class="form-group">
+            <input class='form-control' id='search-address' placeholder='Enter an address or an intersection' type='text'>
+          </div>
+          <div class='form-group'>
+            Within
+            <select id='search-radius' class='form-control'>
+              <option value='400'>2 blocks</option>
+              <option value='805'>1/2 mile</option>
+              <option value='1610'>1 mile</option>
+              <option value='3220'>2 miles</option>
+              <option value='8050'>5 miles</option>
+            </select>
+          </div>
+
+          <div>
+            <button class='btn btn-primary' id="btnSearch"><i class='fa fa-search'></i> Search</button>
+          </div>
+
+        </div>
+
+        <div class="col-md-8">
+          <div id="mapCanvas"></div>
         </div>
       </div>
 

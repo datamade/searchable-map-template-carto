@@ -33,4 +33,9 @@ $(function() {
         console.log(e)
       });
 
+
+      $("#btnSearch").on("click", function() {
+        exMap.doSearch();
+      });
 });
+
