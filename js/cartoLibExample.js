@@ -1,4 +1,6 @@
 $(function() {
+  // Autocomplete when user searches for an address.
+  var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-address'));
   // Example object.
   var exMap = new CartoLib
   exMap.setTableName('chicago_libraries_2016');
