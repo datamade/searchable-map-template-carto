@@ -5,7 +5,7 @@ function CartoLib() {
     locationScope: 'chicago',
     mapDivName: '',
     map: null,
-    mapCentroid: new L.LatLng(41.7872, -87.6345),
+    mapCentroid: new L.LatLng(41.901557, -87.630360),
     defaultZoom: 11,
     lastClickedLayer: null,
     geojson: null,

@@ -1,15 +1,15 @@
 $(function() {
   // Example object.
   var exMap = new CartoLib
-  exMap.setTableName('large_lots_citywide_expansion_data');
+  exMap.setTableName('chicago_libraries_2016');
   exMap.setUserName('datamade');
-  exMap.setFields('pin');
+  // exMap.setFields('pin');
   exMap.setMapDivName('mapCanvas');
-  exMap.setDefaultZoom(12);
-  exMap.setCentroid(41.7872, -87.6345)
+  exMap.setDefaultZoom(11);
+  exMap.setCentroid(41.901557, -87.630360)
   exMap.initiateMap()
   exMap.addInfoBox('bottomright', 'infoBox')
-  var layer1 = exMap.defineSublayer("select * from large_lots_citywide_expansion_data", '#carto-result-style');
+  var layer1 = exMap.defineSublayer("select * from chicago_libraries_2016", '#carto-result-style');
   // Custom code.
   exMap.createCartoLayer(layer1).addTo(exMap._mapSettings.map)
       .done(function(layer) {
