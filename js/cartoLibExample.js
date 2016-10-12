@@ -29,8 +29,9 @@ $(function() {
           $(mapName).css('cursor','inherit');
           CartoLib.prototype.clearInfoBox("infoBox");
         });
-        layerZero.on('featureClick', function(data){
+        layerZero.on('featureClick', function(e, latlng, pos, data, subLayerIndex){
           // You can add something here, too, e.g., a modal window.
+          getOneParcel(data.full_address, exMap.map)
         });
       }).error(function(e) {
         console.log(e)
@@ -51,5 +52,29 @@ function makeInfoText(data) {
 
   return html
 };
+
+// Build this custom funciton yourself. It will outline a parcel on the map, when clicked.
+function getOneParcel(full_address, map) {
+      // if (LargeLots.lastClickedLayer){
+      //   LargeLots.map.removeLayer(LargeLots.lastClickedLayer);
+      // }
+      var address = String(full_address)
+      var sql = new cartodb.SQL({user: 'datamade', format: 'geojson'});
+      console.log(sql)
+      console.log(full_address)
+      sql.execute("select * from chicago_libraries_2016 where full_address='" + address + "'")
+        .done(function(data){
+            var shape = data.features[0];
+            console.log(shape)
+            // CartoLib.lastClickedLayer = L.geoJson(shape);
+            L.geoJson(shape).addTo(map);
+            // CartoLib.lastClickedLayer.addTo(map);
+            // CartoLib.lastClickedLayer.setStyle({fillColor:'#f7fcb9', weight: 2, fillOpacity: 1, color: '#000'});
+            // LargeLots.map.setView(LargeLots.lastClickedLayer.getBounds().getCenter(), 17);
+      //       LargeLots.selectParcel(shape.properties);
+        }).error(function(e){console.log(e)});
+      // window.location.hash = 'browse';
+
+  }
 
 
