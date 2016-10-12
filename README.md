@@ -101,7 +101,7 @@ styles: this.options.mapOptions.styles
 
 In the body of he HTML file, add a style tag with a unique id. Inside this, put a CSS selector with styles that customize the appearance of the location markers, for example:
 
-```
+```CSS
 <style id="carto-result-style">
     #carto-result {
       marker-fill-opacity: 0.9;
