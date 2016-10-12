@@ -85,7 +85,7 @@ You can customize the map itself and the data points that populate it.
 
 Open leaflet-google.js, and find the "options" object. Add a property called "mapOtions," and give it any number of elements, for example:
 
-```
+```CSS
 mapOptions: {
       backgroundColor: '#dddddd'
     }
