@@ -1,21 +1,21 @@
 $(function() {
   // Autocomplete when user searches for an address.
   var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-address'));
-  // Example object.
+  // Create example object.
   var exMap = new CartoLib
-  exMap.setTableName('chicago_libraries_2016');
-  exMap.setUserName('datamade');
-  exMap.setFields('full_address, name, hours_of_operation, phone');
-  exMap.setMapDivName('mapCanvas');
-  exMap.setDefaultZoom(11);
-  exMap.setCentroid(41.901557, -87.630360)
+  // Update map settings.
+  exMap.cartoTableName  = 'chicago_libraries_2016';
+  exMap.cartoUserName   = 'datamade';
+  exMap.fields          = 'full_address, name, hours_of_operation, phone';
+  exMap.mapDivName      = 'mapCanvas';
+  // Create a map!
   exMap.initiateMap()
-  exMap.addInfoBox('bottomright', 'infoBox')
+  exMap.addInfoBox('bottomright', 'infoBox');
   var layer1 = exMap.defineSublayer("select * from chicago_libraries_2016", '#carto-result-style');
   // Custom code.
-  exMap.createCartoLayer(layer1).addTo(exMap._mapSettings.map)
+  exMap.createCartoLayer(layer1).addTo(exMap.map)
       .done(function(layer) {
-        var mapName = "#" + exMap._mapSettings.mapDivName + " div"
+        var mapName = "#" + exMap.mapDivName + " div"
 
         layerZero = layer.getSubLayer(0);
         layerZero.setInteraction(true);
@@ -30,12 +30,11 @@ $(function() {
           CartoLib.prototype.clearInfoBox("infoBox");
         });
         layerZero.on('featureClick', function(data){
-          // You can add something here, e.g., a modal window.
+          // You can add something here, too, e.g., a modal window.
         });
       }).error(function(e) {
         console.log(e)
       });
-
 
       $("#btnSearch").on("click", function() {
         exMap.doSearch();
