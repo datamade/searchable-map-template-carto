@@ -1,7 +1,7 @@
 function CartoLib() {
   this._mapSettings = {
-    cartodbTableName: '',
-    cartodbUserName: '',
+    cartoTableName: '',
+    cartoUserName: '',
     locationScope: 'chicago',
     mapDivName: '',
     map: null,
@@ -19,11 +19,11 @@ function CartoLib() {
 
   // Functions to update settings.
   this.setTableName = function(name) {
-    this._mapSettings.cartodbTableName = name;
+    this._mapSettings.cartoTableName = name;
   };
 
   this.setUserName = function(name) {
-    this._mapSettings.cartodbUserName = name;
+    this._mapSettings.cartoUserName = name;
   };
 
   this.setFields = function(fields) {
@@ -89,7 +89,7 @@ CartoLib.prototype.createCartoLayer = function() {
   }
 
   var layerOpts = {
-    user_name: this._mapSettings.cartodbUserName,
+    user_name: this._mapSettings.cartoUserName,
     type: 'cartodb',
     cartodb_logo: false,
     sublayers: sublayerArr
