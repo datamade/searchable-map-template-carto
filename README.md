@@ -25,10 +25,10 @@ To populate your interactive map, you need a Carto data table. You can create a 
   var exMap = new CartoLib
   ```
 
-2. Update the mapSettings. You can directly adjust the settings in CartoLib.js, or you can do so by calling the library's setter methods. At the very least, you need to set the cartoTableName, cartoUserName, and fields to match those of your unique Carto account. (Note: the fields refer to columns in the Carto table.)
+2. Update the mapSettings. You can directly adjust the settings in CartoLib.js, or you can do so by updating the variables individually. At the very least, you need to set the cartoTableName, cartoUserName, and fields to match those of your unique Carto account. (Note: the fields refer to columns in the Carto table.)
 
   ```
-  exMap.setTableName('chicago_libraries_2016')
+  exMap.cartoTableName = 'chicago_libraries_2016';
   ```
 
 3. Initiate a new map. This function creates a map, centered on the given latitude and longitude coordinates. You can use [LatLong.net](http://www.latlong.net/) to identify the coordinates that work for your map.
