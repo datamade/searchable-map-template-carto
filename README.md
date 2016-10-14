@@ -10,9 +10,9 @@ This library depends on other JS libraries and resources:
 * [jQuery](https://jquery.com/)
 * [Carto.JS](https://github.com/CartoDB/cartodb.js/)
 * [leaflet-google](http://www.matchingnotes.com/javascripts/leaflet-google.js)
-* [Google Maps JavaScrip APi](https://developers.google.com/maps/documentation/javascript/tutorial) or [JS - Google Maps](http://maps.google.com/maps/api/js)
+* [Google Maps JavaScrip API](https://developers.google.com/maps/documentation/javascript/tutorial) or [JS - Google Maps](http://maps.google.com/maps/api/js)
 
-We reccomend that, at minimum, you download the source file for Carto.JS and leaflet-google, since you may wish to hack leaflet-google to customize the map style (see below).
+We recommend that, at minimum, you download the source file for Carto.JS and leaflet-google, since you may wish to hack leaflet-google to customize the map style (see below).
 
 ## Get started
 **Find data. Make a table.**
@@ -21,7 +21,7 @@ To populate your interactive map, you need a Carto data table. You can create a 
 
 **Step-by-step instructions**
 
-1. Add the CartoLib.js file to your project, and in a file of your chosing, instantiate a CartoLib object.
+1. Add the CartoLib.js file to your project, and in a file of your choosing, instantiate a CartoLib object.
 
   ```
   var exMap = new CartoLib
@@ -83,7 +83,7 @@ You can customize the map itself and the data points that populate it.
 
 #### The map
 
-Open leaflet-google.js, and find the "options" object. Add a property called "mapOtions," and give it any number of elements, for example:
+Open leaflet-google.js, and find the "options" object. Add a property called "mapOptions," and give it any number of elements, for example:
 
 ```CSS
 mapOptions: {
