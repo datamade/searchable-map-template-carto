@@ -17,7 +17,9 @@ CartoLib = (function() {
     this.centerMark       = '';
     this.radiusCircle     = '';
     // Create geocoder object to access Google Maps API. Add underscore to insure variable safety.
-    this._geocoder = new google.maps.Geocoder();
+    this._geocoder      = new google.maps.Geocoder();
+    // Turn on autocomplete to predict address when user begins to type.
+    this._autocomplete  = new google.maps.places.Autocomplete(document.getElementById('search-address'));
   }
 
   // Give CartoLib its behaviors.
@@ -156,9 +158,9 @@ CartoLib = (function() {
 
   CartoLib.prototype.clearSearch = function() {
     if (this.centerMark)
-      this.map.removeLayer( this.centerMark );
+      this.map.removeLayer(this.centerMark);
     if (this.radiusCircle)
-      this.map.removeLayer( this.radiusCircle );
+      this.map.removeLayer(this.radiusCircle);
   }
 
   return CartoLib;
