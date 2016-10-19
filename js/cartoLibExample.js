@@ -1,6 +1,4 @@
 $(function() {
-  // Autocomplete when user searches for an address.
-  var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-address'));
   // Create example object.
   var exMap = new CartoLib
   // Update map settings.

@@ -17,7 +17,9 @@ CartoLib = (function() {
     this.centerMark       = '';
     this.radiusCircle     = '';
     // Create geocoder object to access Google Maps API. Add underscore to insure variable safety.
-    this._geocoder = new google.maps.Geocoder();
+    this._geocoder      = new google.maps.Geocoder();
+    // Turn on autocomplete to predict address when user begins to type.
+    this._autocomplete  = new google.maps.places.Autocomplete(document.getElementById('search-address'));
   }
 
   // Give CartoLib its behaviors.
@@ -131,7 +133,7 @@ CartoLib = (function() {
   }
 
   CartoLib.prototype.addIcon = function() {
-    this._centerMark = new L.Marker(this.currentPinpoint, {
+    this.centerMark = new L.Marker(this.currentPinpoint, {
       icon: (new L.Icon({
         iconUrl: 'push_pin.png',
         iconSize: [30, 30],
@@ -140,25 +142,25 @@ CartoLib = (function() {
       )
     });
 
-    this._centerMark.addTo(this.map);
+    this.centerMark.addTo(this.map);
   }
 
   CartoLib.prototype.addCircle = function(radius) {
-    this._radiusCircle = new L.circle(this.currentPinpoint, radius, {
+    this.radiusCircle = new L.circle(this.currentPinpoint, radius, {
         fillColor:'#1d5492',
         fillOpacity:'0.2',
         stroke: false,
         clickable: false
     });
 
-    this._radiusCircle.addTo(this.map);
+    this.radiusCircle.addTo(this.map);
   }
 
   CartoLib.prototype.clearSearch = function() {
-    if (this._centerMark)
-      this.map.removeLayer( this._centerMark );
-    if (this._radiusCircle)
-      this.map.removeLayer( this._radiusCircle );
+    if (this.centerMark)
+      this.map.removeLayer(this.centerMark);
+    if (this.radiusCircle)
+      this.map.removeLayer(this.radiusCircle);
   }
 
   return CartoLib;
