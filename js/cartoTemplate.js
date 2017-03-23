@@ -1,17 +1,16 @@
 $(function() {
 
   function CartoTemplate() {
-    // Constructor function (a JavaScript "class", for the OOP folks). Here, you can give the CartoTemplate all its attributes.
+    // Constructor function (a JavaScript "class", for the OOP folks). Give the CartoTemplate all its attributes!
     this.cartoTableName   = 'parks_public_art';
     this.cartoUserName    = 'datamade';
-    this.locationScope    = 'chicago';
-    this.mapCentroid      = new L.LatLng(41.901557, -87.630360),
     this.mapDivName       = 'mapCanvas';
-    this.map              = null;
+    this.fields           = 'art, artist, park_name';
+    this.mapCentroid      = new L.LatLng(41.901557, -87.630360);
     this.defaultZoom      = 11;
+    this.map              = null;
     this.lastClickedLayer = null;
     this.geojson          = null;
-    this.fields           = '';
     this.currentPinpoint  = '';
     this.centerMark       = '';
     this.radiusCircle     = '';
@@ -95,7 +94,6 @@ $(function() {
       // #search-address refers to a div id in map-example.html. You can rename this div.
       var address = $("#search-address").val();
       var radius = $("#search-radius").val();
-      var location = this.locationScope;
 
       if (radius == null && address != "") {
         radius = 8050;
@@ -150,67 +148,66 @@ $(function() {
         this.map.removeLayer(this.radiusCircle);
     },
 
+    // Customize this!
+    makeInfoText: function(data) {
+      var artist = ''
+      var work = "<h3> " + data.art + "</h3>"
+      var park = "<p><i class='fa fa-map-marker' aria-hidden='true'></i> " + data.park_name + "</p>"
+
+      if (data.artist.trim() != '') {
+        artist = "<p><i class='fa fa-user' aria-hidden='true'></i> " + data.artist + "</p>"
+      }
+
+      var html = work + artist + park
+
+      return html
+    },
+
   }
 
-
-
-
-
-
-
   // Create a new instance of the CartoTemplate, and then call functions.
-  var exMap = new CartoTemplate
+  var myCarto = new CartoTemplate
 
-  // Create a map! This method will show the map.
-  exMap.initiateMap()
-  exMap.addInfoBox('bottomright', 'infoBox');
+  myCarto.initiateMap()
+  myCarto.addInfoBox('bottomright', 'infoBox');
+
   // Create layers.
   var layer1 = {
-      sql: 'select * from parks_public_art',
+      sql: 'select * from ' + myCarto.cartoTableName,
       cartocss: $('#carto-result-style').html().trim(),
-      interactivity: this.fields,
+      interactivity: myCarto.fields,
     }
 
   // Then, add these layers to your map, and enable interactivity.
-  exMap.createCartoLayer(layer1).addTo(exMap.map)
-      .done(function(layer) {
-        var mapName = "#" + exMap.mapDivName + " div"
-
+  myCarto.createCartoLayer(layer1).addTo(myCarto.map)
+    .done(function(layer) {
+        var mapName = "#" + myCarto.mapDivName + " div"
         layerZero = layer.getSubLayer(0);
         layerZero.setInteraction(true);
         layerZero.on('featureOver', function(e, latlng, pos, data, subLayerIndex) {
           $(mapName).css('cursor','pointer');
-          // Add custom text to the info window.
-          var text = makeInfoText(data);
-          CartoLib.prototype.updateInfoBox(text, "infoBox");
+          // Remember: add custom text to the info window.
+          var text = myCarto.makeInfoText(data);
+          myCarto.updateInfoBox(text, "infoBox");
         });
         layerZero.on('featureOut', function() {
           $(mapName).css('cursor','inherit');
-          CartoLib.prototype.clearInfoBox("infoBox");
+          myCarto.clearInfoBox("infoBox");
         });
         layerZero.on('featureClick', function(e, latlng, pos, data, subLayerIndex){
           // You can add something here, too, e.g., a modal window.
-          getOneParcel(data.full_address, exMap.map)
+          // getOneParcel(data.full_address, myCarto.map)
         });
-      }).error(function(e) {
-        console.log(e)
-      });
+    }).error(function(e) {
+      console.log(e)
+    });
 
-      $("#btnSearch").on("click", function() {
-        exMap.doSearch();
-      });
+    $("#btnSearch").on("click", function() {
+      myCarto.doSearch();
+    });
 });
 
-// // Build this custom function yourself. It should format data from your Carto map into HTML.
-// function makeInfoText(data) {
-//   // var name = "<h4>" + data.name + "</h4>"
-//   // var address = "<p><i class='fa fa-map-marker' aria-hidden='true'></i> " + data.full_address + "</p>"
-//   // var hours = "<p><i class='fa fa-calendar' aria-hidden='true'></i> " + data.hours_of_operation + "</p>"
-//   // var phone = "<p><i class='fa fa-phone' aria-hidden='true'></i> " + data.phone + "</p>"
-//   // var html = name + address + hours + phone
 
-//   // return html
-// };
 
 // // Build this custom funciton yourself. It will outline a parcel on the map, when clicked.
 // function getOneParcel(full_address, map) {
