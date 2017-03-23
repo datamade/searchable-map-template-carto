@@ -1,5 +1,5 @@
 # CartoLib
-A JavaScript library for building interactive Carto maps.
+A starter template for building interactive Carto maps.
 
 **[VIEW DEMO](https://datamade.github.io/CartoLib/)**
 
@@ -12,12 +12,34 @@ This library depends on other JS libraries and resources:
 * [leaflet-google](http://www.matchingnotes.com/javascripts/leaflet-google.js)
 * [Google Maps JavaScrip APi](https://developers.google.com/maps/documentation/javascript/tutorial) or [JS - Google Maps](http://maps.google.com/maps/api/js)
 
-We reccomend that, at minimum, you download the source file for Carto.JS and leaflet-google, since you may wish to hack leaflet-google to customize the map style (see below).
+We reccomend that, at minimum, you download the source files for Carto.JS and leaflet-google, since you may wish to hack leaflet-google to customize the map style (see below). Hosting your files locally - rather than pointing to a CDN - also ensures simplicity and tearless nights, when Carto or Leaflet releases an updated library.
 
 ## Get started
 **Find data. Make a table.**
 
 To populate your interactive map, you need a Carto data table. You can create a free account and learn about setting up your data on the official [Carto website](https://carto.com/). If you need resources or ideas, consider using the [Chicago Data Portal](https://data.cityofchicago.org/).
+
+**Overview of the properties and prototype functions**
+
+The Carto Template employs two JavaScript principles: (1) constructor functionality and (2) prototype patterning, in which an object acquires new properties (functions) through Object.prototype.
+
+The template comes with a constructor function (similar to a "class" - a reusable object). Most simply, we call our constructor function: CartoTemplate. CartoTemplate stores the attributes essential to your map, such as your Carto table and username.
+
+CartoTemplate can do a lot; you can find its functions inside an object literal, which overrides the original prototype property of the object.
+
+What follows describes each attribute of the constructor function and the custom prototype properties of the object.
+
+`cartoTableName`
+
+The name of of your Carto table. Again, you can visit the [Carto website](https://carto.com/) to learn about opening an account and creating a dataset.
+
+`cartoUserName`
+
+The username associated with your Carto account.
+
+`locationScope`
+
+The name of the city that your map despliys.
 
 **Step-by-step instructions**
 
