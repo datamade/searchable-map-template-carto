@@ -1,5 +1,5 @@
 # CartoLib
-A JavaScript library for building interactive Carto maps.
+A starter template for building interactive Carto maps.
 
 **[VIEW DEMO](https://datamade.github.io/CartoLib/)**
 
@@ -12,70 +12,103 @@ This library depends on other JS libraries and resources:
 * [leaflet-google](http://www.matchingnotes.com/javascripts/leaflet-google.js)
 * [Google Maps JavaScrip APi](https://developers.google.com/maps/documentation/javascript/tutorial) or [JS - Google Maps](http://maps.google.com/maps/api/js)
 
-We reccomend that, at minimum, you download the source file for Carto.JS and leaflet-google, since you may wish to hack leaflet-google to customize the map style (see below).
+We recommend that, at minimum, you download the source files for Carto.JS and leaflet-google, since you may wish to hack leaflet-google to customize the map style (see below). Hosting your files locally - rather than pointing to a CDN - also ensures simplicity and tearless nights, when Carto or Leaflet quietly releases an updated library. Alternatively, you can simply fork or clone this repo, which gives you the Carto and Leaflet libraries (learn more below).
 
 ## Get started
 **Find data. Make a table.**
 
-To populate your interactive map, you need a Carto data table. You can create a free account and learn about setting up your data on the official [Carto website](https://carto.com/). If you need resources or ideas, consider using the [Chicago Data Portal](https://data.cityofchicago.org/).
+To populate your interactive map, you need a Carto dataset. You can create a free account and learn about setting up your data on the official [Carto website](https://carto.com/). If you need resources or ideas, consider using the [Chicago Data Portal](https://data.cityofchicago.org/).
+
+**Overview of variables and prototype functions**
+
+The Carto Template employs two JavaScript principles: (1) constructor functionality and (2) prototype patterning, in which an object acquires new properties (functions) through Object.prototype.
+
+The template comes with a constructor function (similar to a "class" - or a reusable object). We call our constructor function `CartoTemplate`. CartoTemplate stores all attributes essential for building a map, such as your Carto table and username.
+
+CartoTemplate can do a lot! It creates maps, adds layers, brokers precise location searches, etc. You can find its functions inside `CartoTemplate.prototype`, an object literal that overrides the original prototype property of CartoTemplate.
+
+What follows describes the project-specific attributes of the constructor function and the customizable prototype properties of the object.
+
+`cartoTableName`
+
+The name of of your Carto table. Again, you can visit the [Carto website](https://carto.com/) to learn about opening an account and creating a dataset.
+
+`cartoUserName`
+
+The username associated with your Carto account.
+
+`mapDivName`
+
+The unique id of the div where the map renders. You can find this in index.html. Our template uses `mapCanvas`, but you can call it anything you like.
+
+`fields`
+
+An important one! This variable includes the column names from Carto that you want to display somewhere on the site (e.g., in a modal, a text box that displays on hover). A single typo in the `fields` variable will cause your map to crash...silently.
+
+`mapCentroid`
+
+The latitude and longitude coordinates of the map's focal point. Here's [one site](http://www.latlong.net/) to help you find the right digits.
+
+`defaultZoom`
+
+The default distance away from the mapCentroid. Increase the zoom to get closer; decrease the zoom to move further out.
 
 **Step-by-step instructions**
 
-1. Add the CartoLib.js file to your project, and in a file of your chosing, instantiate a CartoLib object.
+1. Make a copy of the Carto Template. You can fork this repo or clone it onto your local machine.
 
-  ```
-  var exMap = new CartoLib
-  ```
-
-2. Update the mapSettings. You can directly adjust the settings in CartoLib.js, or you can do so by updating the variables individually. At the very least, you need to set the cartoTableName, cartoUserName, and fields to match those of your unique Carto account. (Note: the fields refer to columns in the Carto table.)
-
-  ```
-  exMap.cartoTableName = 'chicago_libraries_2016';
-  ```
-
-3. Initiate a new map. This function creates a map, centered on the given latitude and longitude coordinates. You can use [LatLong.net](http://www.latlong.net/) to identify the coordinates that work for your map.
-
-  ```
-  exMap.initiateMap()
-  ```
-
-4. Add an info window, which can contain a generic message or information about the location markers. (For strategies to get location information, see the custom makeInfoText function in cartoLibExample.js.)
-
-  ```
-  exMap.addInfoBox('bottomright', 'infoBox')
-  ```
-
-5. Now, you are ready to define a sublayer! You need two parameters to do so: a SQL query and the ID name that styles your location markers, e.g. '#carto-result-style' (see below for customizing your location markers).
-
-  ```
-  var layer1 = exMap.defineSublayer("select * from large_lots_citywide_expansion_data", '#carto-result-style');
-  ```
-
-6. Finally, create the layer by querying Carto, and add it to the map.
-
-  ```
-  exMap.createCartoLayer(layer1).addTo(exMap._mapSettings.map)
-  ```
-
-  You can add feature events, for example, a hover feature that adds data to the info window.
-
-## Add custom code
-
-To render a custom map you need to add additional code, depending on the data that comes from Carto.
-
-**updateInfoBox**
-
-This function adds content to the info window on the map. Add your custom HTML by parsing the data object, for example:
-
-```
-infoText += "<p>Organzation name: " + data.prop_name + "</p>";
+```bash
+git clone
 ```
 
-You can find one strategy for creating HTML in the makeInfoText in cartoLibExample.js. (Note: "prop_name" refers to the columns defined in "fields" in this._mapSettings.)
+2. Open `js/cartoTemplate.js`. Modify the attributes of CartoTemplate. You can change the values in the constructor function itself:
 
-**createCartoLayer**
+```
+function CartoTemplate() {
+  ...
+  this.cartoTableName = 'exciting_new_dataset',
+  ...
+}
+```
 
-This function adds sublayers with location markers, taken from your Carto query. After adding a sublayer to your map, you can also create feature events, such as hover and click events. It is here that you can call your unique updateInfoBox functions.
+Or you can change these attributes, after instantiating a new instance of CartoTemplate:
+
+```
+var myCarto = new CartoTemplate;
+myCarto.cartoTableName = 'exciting_new_dataset';
+```
+
+Whichever case, you need to customize the following: cartoTableName, cartoUserName, fields, and mapCentroid.
+
+3. Add an info window with a generic message or information about the location markers. This info box appears when a user hovers over a marker.
+
+Create your unique html in the `makeInfoText` function. Add your custom HTML by parsing the data object, for example:
+
+```
+var park = "<p><i class='fa fa-map-marker' aria-hidden='true'></i> " + data.park_name + "</p>"
+```
+
+Then, adjust its position on the map by passing in parameters to `addInfoBox`. You might try: "bottomleft," "topright," or "topleft.""
+
+4. Define a sublayer or two. You need to define a SQL query (select everything?), the ID name that styles your location markers, e.g. '#carto-result-style' (see below for customizing your location markers), and the interactivity (required to enable hover and click functionality).
+
+  ```
+  var layer1 = {
+      sql: 'select * from ' + myCarto.cartoTableName,
+      cartocss: $('#carto-result-style').html().trim(),
+      interactivity: myCarto.fields,
+    }
+  ```
+
+You can create as many layers as you like - indeed, experiment with writing different SQL query, or create a new instance of CartoTemplate to query multiple datasets.
+
+
+6. Finally, add your layer(s) to the map. Pass in each layer as a parameter to `createCartoLayer`.
+
+  ```
+  myCarto.createCartoLayer(layer1, layer2, layer3).addTo(myCarto.map)
+  ```
+
 
 ## Add custom styles
 
