@@ -29,27 +29,39 @@ CartoTemplate can do a lot! It creates maps, adds layers, brokers precise locati
 
 What follows describes the project-specific attributes of the constructor function and the customizable prototype properties of the object.
 
-`cartoTableName`
+```
+cartoTableName
+```
 
 The name of of your Carto table. Again, you can visit the [Carto website](https://carto.com/) to learn about opening an account and creating a dataset.
 
-`cartoUserName`
+```
+cartoUserName
+```
 
 The username associated with your Carto account.
 
-`mapDivName`
+```
+mapDivName
+```
 
 The unique id of the div where the map renders. You can find this in index.html. Our template uses `mapCanvas`, but you can call it anything you like.
 
-`fields`
+```
+fields
+```
 
 An important one! This variable includes the column names from Carto that you want to display somewhere on the site (e.g., in a modal, a text box that displays on hover). A single typo in the `fields` variable will cause your map to crash...silently.
 
-`mapCentroid`
+```
+mapCentroid
+```
 
 The latitude and longitude coordinates of the map's focal point. Here's [one site](http://www.latlong.net/) to help you find the right digits.
 
-`defaultZoom`
+```
+defaultZoom
+```
 
 The default distance away from the mapCentroid. Increase the zoom to get closer; decrease the zoom to move further out.
 
@@ -57,38 +69,38 @@ The default distance away from the mapCentroid. Increase the zoom to get closer;
 
 1. Make a copy of the Carto Template. You can fork this repo or clone it onto your local machine.
 
-```bash
-git clone
-```
+  ```bash
+  git clone
+  ```
 
 2. Open `js/cartoTemplate.js`. Modify the attributes of CartoTemplate. You can change the values in the constructor function itself:
 
-```
-function CartoTemplate() {
-  ...
-  this.cartoTableName = 'exciting_new_dataset',
-  ...
-}
-```
+  ```
+  function CartoTemplate() {
+    ...
+    this.cartoTableName = 'exciting_new_dataset',
+    ...
+  }
+  ```
+  
+  Or you can change these attributes, after instantiating a new instance of CartoTemplate:
 
-Or you can change these attributes, after instantiating a new instance of CartoTemplate:
-
-```
-var myCarto = new CartoTemplate;
-myCarto.cartoTableName = 'exciting_new_dataset';
-```
-
-Whichever case, you need to customize the following: cartoTableName, cartoUserName, fields, and mapCentroid.
+  ```
+  var myCarto = new CartoTemplate;
+  myCarto.cartoTableName = 'exciting_new_dataset';
+  ```
+  
+  Whichever case, you need to customize the following: cartoTableName, cartoUserName, fields, and mapCentroid.
 
 3. Add an info window with a generic message or information about the location markers. This info box appears when a user hovers over a marker.
 
-Create your unique html in the `makeInfoText` function. Add your custom HTML by parsing the data object, for example:
+  Create your unique html in the `makeInfoText` function. Add your custom HTML by parsing the data object, for example:
 
-```
-var park = "<p><i class='fa fa-map-marker' aria-hidden='true'></i> " + data.park_name + "</p>"
-```
+  ```
+  var park = "<p><i class='fa fa-map-marker' aria-hidden='true'></i> " + data.park_name + "</p>"
+  ```
 
-Then, adjust its position on the map by passing in parameters to `addInfoBox`. You might try: "bottomleft," "topright," or "topleft.""
+  Then, adjust its position on the map by passing in parameters to `addInfoBox`. You might try: "bottomleft," "topright," or "topleft.""
 
 4. Define a sublayer or two. You need to define a SQL query (select everything?), the ID name that styles your location markers, e.g. '#carto-result-style' (see below for customizing your location markers), and the interactivity (required to enable hover and click functionality).
 
@@ -100,7 +112,7 @@ Then, adjust its position on the map by passing in parameters to `addInfoBox`. Y
     }
   ```
 
-You can create as many layers as you like - indeed, experiment with writing different SQL query, or create a new instance of CartoTemplate to query multiple datasets.
+  You can create as many layers as you like - indeed, experiment with writing different SQL query, or create a new instance of CartoTemplate to query multiple datasets.
 
 
 6. Finally, add your layer(s) to the map. Pass in each layer as a parameter to `createCartoLayer`.
