@@ -3,7 +3,7 @@ A starter template for building interactive Carto maps.
 
 This template offers an entry point into the seemingly complicated world of Carto and data visualization.
 
-**[VIEW DEMO](https://datamade.github.io/CartoLib/)**
+**[VIEW DEMO](https://datamade.github.io/CartoTemplate/)**
 
 ## Dependencies
 
