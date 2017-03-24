@@ -92,7 +92,7 @@ The default distance away from the mapCentroid. Increase the zoom to get closer;
   myCarto.cartoTableName = 'exciting_new_dataset';
   ```
 
-  Regardless of the strategy, you need to customize the following: cartoTableName, cartoUserName, fields, and mapCentroid.
+  Regardless of the strategy, you need to customize the following:   cartoTableName, cartoUserName, fields, and mapCentroid.
 
 3. Add an info window with a generic message or information about the location markers. This info box appears when a user hovers over a marker.
 
