@@ -1,7 +1,7 @@
 # Carto Template
 A starter template for building interactive Carto maps.
 
-This template provides an initial point
+This template offers an entry point into the seemingly complicated world of Carto and data visualization.
 
 **[VIEW DEMO](https://datamade.github.io/CartoLib/)**
 
@@ -72,7 +72,7 @@ The default distance away from the mapCentroid. Increase the zoom to get closer;
 1. Make a copy of the Carto Template. You can fork this repo or clone it onto your local machine.
 
   ```bash
-  git clone
+  git clone git@github.com:datamade/CartoTemplate.git
   ```
 
 2. Open `js/cartoObj.js`. Modify the attributes of CartoObj. You can change the values in the constructor function itself:
