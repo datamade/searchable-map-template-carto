@@ -1,7 +1,6 @@
 $(function() {
 
-  function CartoTemplate() {
-    // Constructor function (a JavaScript "class", for the OOP folks). Give the CartoTemplate all its attributes!
+  function CartoObj() {
     this.cartoTableName   = 'parks_public_art';
     this.cartoUserName    = 'datamade';
     this.mapDivName       = 'mapCanvas';
@@ -20,8 +19,8 @@ $(function() {
     this._autocomplete  = new google.maps.places.Autocomplete(document.getElementById('search-address'));
   }
 
-  CartoTemplate.prototype = {
-    constructor: CartoTemplate,
+  CartoObj.prototype = {
+    constructor: CartoObj,
     initiateMap: function() {
       // Initiate leaflet map
       var div = this.mapDivName;
@@ -165,8 +164,8 @@ $(function() {
 
   }
 
-  // Create a new instance of the CartoTemplate, and then call functions.
-  var myCarto = new CartoTemplate
+  // Create a new instance of the CartoObj, and then call functions.
+  var myCarto = new CartoObj
 
   myCarto.initiateMap()
   myCarto.addInfoBox('bottomright', 'infoBox');
@@ -196,7 +195,6 @@ $(function() {
         });
         layerZero.on('featureClick', function(e, latlng, pos, data, subLayerIndex){
           // You can add something here, too, e.g., a modal window.
-          // getOneParcel(data.full_address, myCarto.map)
         });
     }).error(function(e) {
       console.log(e)
@@ -206,30 +204,4 @@ $(function() {
       myCarto.doSearch();
     });
 });
-
-
-
-// // Build this custom funciton yourself. It will outline a parcel on the map, when clicked.
-// function getOneParcel(full_address, map) {
-//       // if (LargeLots.lastClickedLayer){
-//       //   LargeLots.map.removeLayer(LargeLots.lastClickedLayer);
-//       // }
-//       var address = String(full_address)
-//       var sql = new cartodb.SQL({user: 'datamade', format: 'geojson'});
-//       sql.execute("select * from parks_public_art where full_address='" + address + "'")
-//         .done(function(data){
-//             var shape = data.features[0];
-//             console.log(shape)
-//             CartoLib.lastClickedLayer = L.geoJson(shape);
-//             // L.geoJson(shape).addTo(map);
-//             console.log(L.geoJson(shape))
-
-//             CartoLib.lastClickedLayer.addTo(CartoLib.map);
-//             // CartoLib.lastClickedLayer.setStyle({fillColor:'#f7fcb9', weight: 2, fillOpacity: 1, color: '#000'});
-//             // CartoLib.map.setView(CartoLib.lastClickedLayer.getBounds().getCenter(), 17);
-//             // LargeLots.selectParcel(shape.properties);
-//         }).error(function(e){console.log(e)});
-//       // window.location.hash = 'browse';
-
-// }
 
