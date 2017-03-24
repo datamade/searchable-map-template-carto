@@ -21,7 +21,7 @@ We recommend that, at minimum, you download the source files for Carto.JS and le
 
 To populate your interactive map, you need a Carto dataset. You can create a free account and learn about setting up your data on the official [Carto website](https://carto.com/). If you need resources or ideas, consider using the [Chicago Data Portal](https://data.cityofchicago.org/).
 
-**Overview of variables and prototype functions**
+**Look inside**
 
 The Carto Template employs two JavaScript principles: (1) constructor functionality and (2) prototype patterning, in which an object acquires new properties (functions) through [Object.prototype](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/prototype).
 
