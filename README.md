@@ -10,7 +10,7 @@ This library depends on other JS libraries and resources:
 * [jQuery](https://jquery.com/)
 * [Carto.JS](https://github.com/CartoDB/cartodb.js/)
 * [leaflet-google](http://www.matchingnotes.com/javascripts/leaflet-google.js)
-* [Google Maps JavaScrip APi](https://developers.google.com/maps/documentation/javascript/tutorial) or [JS - Google Maps](http://maps.google.com/maps/api/js)
+* [Google Maps JavaScript APi](https://developers.google.com/maps/documentation/javascript/tutorial) or [JS - Google Maps](http://maps.google.com/maps/api/js)
 
 We recommend that, at minimum, you download the source files for Carto.JS and leaflet-google, since you may wish to hack leaflet-google to customize the map style (see below). Hosting your files locally - rather than pointing to a CDN - also ensures simplicity and tearless nights, when Carto or Leaflet quietly releases an updated library. Alternatively, you can simply fork or clone this repo, which gives you the Carto and Leaflet libraries (learn more below).
 
