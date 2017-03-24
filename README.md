@@ -7,7 +7,7 @@ This template offers an entry point into the seemingly complicated world of Cart
 
 ## Dependencies
 
-This library depends on other JS libraries and resources:
+This template depends on other JS libraries and resources:
 
 * [jQuery](https://jquery.com/)
 * [Carto.JS](https://github.com/CartoDB/cartodb.js/)
