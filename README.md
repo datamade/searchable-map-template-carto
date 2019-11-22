@@ -1,5 +1,5 @@
 # Carto Template - by DataMade
-You want to put your data on a searchable, filterable map. This is a free, open source template using CARTO to help you do it.
+You want to put your data on a searchable, filterable map. This is a free, open source template using CARTO to help you do it. This template is a successor to Derek Eder's [Fusion Tables Map Template](https://github.com/derekeder/FusionTable-Map-Template).
 
 **[See the working demo &raquo;](https://carto-template.netlify.com/)**
 
@@ -39,6 +39,18 @@ This template depends on other JS libraries and resources:
 Older versions of this Carto Template
 * [Probation Community Resources](https://probationcommunityresources.org) ([code](https://github.com/datamade/probation-resources-map))- Find resources near you for adults and juveniles on probation in Cook County. Includes many advanced filters.
 * [Chicago Urban Agriculture Mapping Project](https://cuamp.org/) - a collaborative map and inventory of urban agriculture and community gardens in Chicago since 2010.
+
+## Differences between this template and the Fusion Tables Map Template
+
+This template borrows heavily from Derek Eder's [Fusion Tables Map Template](https://github.com/derekeder/FusionTable-Map-Template) and follows a similar code pattern and architecture. It is intended to be easy to pick up and modify by people with limited coding experience and not require anything to be installed on your computer or server to run it. 
+
+That being said, there are some differences between this template and the Fusion Tables Map Template, namely:
+
+* **Powered by CARTO instead of Fusion Tables**. While they are similar platforms, CARTO is built on top of an open source stack with postgres and uses Leaflet for rendering the maps. This translates into syntax changes in the javascript API.
+* **Cost**. This is a big one. Fusion Tables was free, CARTO is not. CARTO has gotten pretty expensive recently (to the tune of $199/month). They do offer [Grants](https://carto.com/blog/grant-for-open-data/), however, as well as [free acccounts to Students and Educators](https://carto.com/help/getting-started/student-accounts/).
+* **Bootstrap 4 vs Bootstrap 3**. I upgraded to the latest version of Boostrap when building this template. There are some notable changes in syntax with these versions, [which are documented here](https://getbootstrap.com/docs/4.3/migration/).
+* **Referencing column names**. Columns in CARTO are converted to lower case with underscores (`First Name` => `first_name`). A minor, but important difference.
+* **It works**! Fusion Tables is no longer active, so projects made with the old template will no longer work. This template does work, which is a big improvement!
 
 
 ## Setup
