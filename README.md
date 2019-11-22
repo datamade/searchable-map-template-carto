@@ -31,6 +31,15 @@ This template depends on other JS libraries and resources:
 * [Bootstrap 4](https://getbootstrap.com/)
 * [Moment.js](https://momentjs.com/)
 
+## Examples
+
+* [Macoupin Resource Directory](https://macoupin-directory.netlify.com/) ([code](https://github.com/datamade/macoupin-directory)) - an online source for finding businesses, local governments and community services.
+* [Vacant and Abandoned Building Finder - Chicago](https://github.com/datamade/vacant-building-finder/) ([code](https://github.com/datamade/macoupin-directory)) - find vacant and abandoned buildings in Chicago. Data comes from reports made for open and vacant buildings to 311 since July 1, 2018.
+
+Older versions of this Carto Template
+* [Probation Community Resources](https://probationcommunityresources.org) ([code](https://github.com/datamade/probation-resources-map))- Find resources near you for adults and juveniles on probation in Cook County. Includes many advanced filters.
+* [Chicago Urban Agriculture Mapping Project](https://cuamp.org/) - a collaborative map and inventory of urban agriculture and community gardens in Chicago since 2010.
+
 
 ## Setup
 
