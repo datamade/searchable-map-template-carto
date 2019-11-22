@@ -9,7 +9,6 @@ var CartoDbLib = {
   userName: '',
   fields: '',
   listOrderBy: '',
-  googleApiKey: '',
   recordName: '',
   recordNamePlural: '',
 
@@ -32,7 +31,6 @@ var CartoDbLib = {
     CartoDbLib.userName = options.userName || "",
     CartoDbLib.fields = options.fields || "",
     CartoDbLib.listOrderBy = options.listOrderBy || "",
-    CartoDbLib.googleApiKey = options.googleApiKey || "",
     CartoDbLib.recordName = options.recordName || "result",
     CartoDbLib.recordNamePlural = options.recordNamePlural || "results",
     CartoDbLib.radius = options.radius || 805,    

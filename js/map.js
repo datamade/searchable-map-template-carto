@@ -13,13 +13,12 @@ $(function() {
     layerUrl:     'https://datamade.carto.com/api/v2/viz/3d861410-d645-4c10-a19d-ef01c1135441/viz.json',
     tableName:    'flu_shot_locations_2014_present_2019_2020_season',
     userName:     'datamade',
-    fields :      'cartodb_id, the_geom, contact, cost, eligibility, facility_id, facility_name, hours, notes, phone, recurrence_days, season, street1, street2, city, state, postal_code, url',
+    fields :      'cartodb_id, the_geom, cost, facility_name, hours, phone, street1, street2, city, state, url',
     listOrderBy: 'facility_name',
-    googleApiKey: 'AIzaSyBhlf7Ayk_8nYYW5siUMTXXwvI-A6va_m0',
     recordName: 'flu shot location',
     recordNamePlural: 'flu shot locations',
     radius: 1610,
-     });
+  });
 
   var autocomplete = new google.maps.places.Autocomplete(document.getElementById('search-address'));
   var modalURL;
