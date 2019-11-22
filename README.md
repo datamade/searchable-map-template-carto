@@ -3,7 +3,7 @@ You want to put your data on a searchable, filterable map. This is a free, open 
 
 **[See the working demo &raquo;](https://carto-template.netlify.com/)**
 
-![Carto Template](https://raw.githubusercontent.com/datamade/CartoTemplate/master/images/carto-template-2.gif)
+![Carto Template](https://raw.githubusercontent.com/datamade/CartoTemplate/master/images/screenshot.jpg)
 
 ## Features
 
@@ -17,6 +17,8 @@ You want to put your data on a searchable, filterable map. This is a free, open 
 * ability to easily add additional search filters (checkboxes, sliders, etc)
 * mobile and tablet friendly using responsive design (Bootstrap 4)
 * built with HTML, CSS and Javascript - no server side code required
+
+![Carto Template](https://raw.githubusercontent.com/datamade/CartoTemplate/master/images/carto-template-2.gif)
 
 ## Dependencies
 
@@ -32,7 +34,49 @@ This template depends on other JS libraries and resources:
 
 ## Setup
 
-Follow the steps below and you'll be in business with your own map. Instructions coming soon.
+Follow the steps below and you'll be in business with your own map.
+
+### Setting your map up in CARTO
+
+![Carto Template](https://raw.githubusercontent.com/datamade/CartoTemplate/master/images/carto-template-1.gif)
+
+1. [Sign up for a CARTO account](https://carto.com/signup). Note that CARTO costs money, but they do offer [Grants](https://carto.com/blog/grant-for-open-data/), as well as [free acccounts to Students and Educators](https://carto.com/help/getting-started/student-accounts/).
+2. Once your account is set up, add a new dataset, either by uploading a file, or providing a link to one. [Carto supports many geospatial data formats](https://carto.com/developers/import-api/guides/importing-geospatial-data/#supported-geospatial-data-formats).
+3. Once your data is uploaded, make your new dataset 'Public' or visible 'With link' so it can be accessed publicly. You will want to save the table name for this dataset for the `tableName` configuration variable.
+4. Next, click the `Visualize` button in the upper right corner to create a map. You can customize how the map looks within CARTO, but it is not necessary for this template. 
+5. Next, click the `Publish` button in the upper right corner. This will open up a window that gives you 3 options. Copy the `CartoDb.js` option on the far right and save it to the `layerUrl` variable. It will look something like this: `https://datamade.carto.com/api/v2/viz/3d861410-d645-4c10-a19d-ef01c1135441/viz.json`. 
+
+### Editing this template 
+
+6. Download or clone this project and fire up your text editor of choice. Open up `/js/map.js` and set your map options in the `CartoDbLib.initialize` function:
+  - `map_centroid` -  the lat/long you want your map to center on ([find yours here](https://getlatlong.net/))
+  - `layerUrl` - The visualization layer from CARTO. It should look like this: `https://datamade.carto.com/api/v2/viz/3d861410-d645-4c10-a19d-ef01c1135441/viz.json`
+  - `tableName` - The table in CARTO containing your map data.
+  - `userName` - Your CARTO user name.
+  - `fields` - A comma separated list of fields in your CARTO table that you want available for the map. You must include at minimum `cartodb_id` and `the_geom`. Columns in CARTO are converted to lower case with underscores (`First Name` => `first_name`), so make sure they are correct.
+7. Replace the API key on this line of `index.html` with yours: `<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key=[YOUR KEY HERE]"></script>`
+8. Edit the templates in the `templates` folder for how you want your data displayed. These templates use EJS, which allows the display of your variables with HTML, as well as conditional logic. [Documentation is here](https://ejs.co/#docs). 
+  - `/templates/hover.ejs` - template for when you hover over a dot on the map
+  - `/templates/popup.ejs` - template for when a dot on the map is clicked
+  - `/templates/table-row.ejs` - template for each row in the list view
+9. Update the map styles at the bottom of `index.html`. By default, your locations will show up as red dots, but you can change this by changing the cartocss. [Documentation is here](https://carto.com/developers/styling/cartocss/).
+```
+<style id="maps-styles">
+  #my-map{
+    marker-fill-opacity: 0.9;
+    marker-line-color: #FFF;
+    marker-line-width: 1;
+    marker-line-opacity: 1;
+    marker-placement: point;
+    marker-type: ellipse;
+    marker-width: 13;
+    marker-fill: #CE2232;
+    marker-allow-overlap: true;
+  }
+</style>
+```
+10. Add/modify additional filters to `index.html` and `/js/cartodb_lib.js`. This will depend on the data you are trying to map.
+11. Upload this map and all the supporting files and folders to your site. This map requires no back-end code, so any host will work, including GitHub pages, Netlify or your own web server.
 
 ## MapsLib options
 
@@ -45,9 +89,8 @@ CartoDbLib.initialize({
     layerUrl:     'https://datamade.carto.com/api/v2/viz/3d861410-d645-4c10-a19d-ef01c1135441/viz.json',
     tableName:    'flu_shot_locations_2014_present_2019_2020_season',
     userName:     'datamade',
-    fields :      'cartodb_id, the_geom, cost, facility_name, hours phone, street1, street2, city, state, url',
+    fields :      'cartodb_id, the_geom, cost, facility_name, hours, phone, street1, street2, city, state, url',
     listOrderBy: 'facility_name',
-    googleApiKey: 'AIzaSyBhlf7Ayk_8nYYW5siUMTXXwvI-A6va_m0',
     recordName: 'flu shot location',
     recordNamePlural: 'flu shot locations',
     radius: 1610,
@@ -60,7 +103,7 @@ CartoDbLib.initialize({
 | defaultZoom      | 11                      | Default zoom level when map is loaded (bigger is more zoomed in).                                                                                   |
 | searchRadius     | 805                     | Default search radius. Defined in meters. Default is 1/2 mile.                                                                                      |
 | layerUrl         |                         | The visualization layer from CARTO. It should look like this: `https://datamade.carto.com/api/v2/viz/3d861410-d645-4c10-a19d-ef01c1135441/viz.json` |
-| tableName        |                         | The table in CARTO containing your map data                                                                                                         |
+| tableName        |                         | The table in CARTO containing your map data.                                                                                                       |
 | userName         |                         | Your CARTO user name.                                                                                                                               |
 | fields           |                         | A comma separated list of fields in your CARTO table that you want available for the map. You must include at minimum `cartodb_id` and `the_geom`   |
 | recordName       | record                  | Used for showing the count of results.                                                                                                              |
@@ -70,7 +113,15 @@ CartoDbLib.initialize({
 
 ## Resources
 
-Coming soon.
+For making customizations to this template
+* [Bootstrap 4 documentation](https://getbootstrap.com/docs/4.3/getting-started/introduction/)
+* [Cartocss documentation](https://cartocss.readthedocs.io/en/latest/)
+* [EJS documentation](https://ejs.co/#docs)
+* [moment.js documentation](https://momentjs.com/docs/)
+
+For deeper updates to the library
+* [CARTO documentation](https://carto.com/developers/carto-js/v3/reference/)
+* [Leaflet documentation](https://leafletjs.com/reference-1.5.0.html)
 
 ## Common issues/troubleshooting
 
