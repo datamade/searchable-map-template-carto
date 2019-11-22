@@ -49,6 +49,8 @@ That being said, there are some differences between this template and the Fusion
 * **Powered by CARTO instead of Fusion Tables**. While they are similar platforms, CARTO is built on top of an open source stack with postgres and uses Leaflet for rendering the maps. This translates into syntax changes in the javascript API.
 * **Cost**. This is a big one. Fusion Tables was free, CARTO is not. CARTO has gotten pretty expensive recently (to the tune of $199/month). They do offer [Grants](https://carto.com/blog/grant-for-open-data/), however, as well as [free acccounts to Students and Educators](https://carto.com/help/getting-started/student-accounts/).
 * **Bootstrap 4 vs Bootstrap 3**. I upgraded to the latest version of Boostrap when building this template. There are some notable changes in syntax with these versions, [which are documented here](https://getbootstrap.com/docs/4.3/migration/).
+* **List view included by default**. I decided to include the list view mode by default, as it is the best way to view results on a mobile phone. It requires editing an additonal template `templates/table-row.ejs` but I think is worth the extra work to customize.
+* **Hover functionality**. Because it was pretty to do in Leaflet, this template includes the ability to hover over a point and see a preview of the point data before clicking on it.
 * **Referencing column names**. Columns in CARTO are converted to lower case with underscores (`First Name` => `first_name`). A minor, but important difference.
 * **It works**! Fusion Tables is no longer active, so projects made with the old template will no longer work. This template does work, which is a big improvement!
 
