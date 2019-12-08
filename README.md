@@ -1,6 +1,8 @@
 # Searchable Map Template - Carto
 You want to put your data on a searchable, filterable map. This is a free, open source template using CARTO to help you do it. This template is a successor to Derek Eder's [Fusion Tables Map Template](https://github.com/derekeder/FusionTable-Map-Template).
 
+If you don't have or want a CARTO account, check out [Searchable Map Template - Turf](https://github.com/datamade/searchable-map-template-turf/).
+
 **[See the working demo &raquo;](https://carto-template.netlify.com/)**
 
 ![Carto Template](https://raw.githubusercontent.com/datamade/CartoTemplate/master/images/screenshot.jpg)
